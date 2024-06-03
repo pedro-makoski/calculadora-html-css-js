@@ -50,7 +50,7 @@ input.addEventListener('input', () => {
     let ultimo_valor = valor_input.slice(-1)
     let penultimo_valor = valor_input.slice(-2, -1)
 
-    if(!operacoes.includes(ultimo_valor) && !numeros.includes(ultimo_valor) && !operacoes_reais.includes(ultimo_valor)) {
+    if(!operacoes.includes(ultimo_valor) && !numeros.includes(ultimo_valor) && !operacoes_reais.includes(ultimo_valor) && !['(', ')'].includes(ultimo_valor)) {
         let valor = valor_input.slice(0, valor_input.length - 1)
         input.value = valor
     }
