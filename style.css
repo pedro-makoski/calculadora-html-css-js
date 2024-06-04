@@ -106,7 +106,8 @@ main input:focus {
         padding: 0 10px;
         margin: 0;
         display: flex;
-        justify-content: center;
+        justify-content: start;
+        padding-top: 40px;
         align-items: center;
     }
 
