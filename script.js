@@ -2,6 +2,8 @@ const botoes = document.querySelectorAll('.botoes button')
 const input = document.getElementById('operacao')
 
 const operacoes = ['+', '-', '÷', 'X', 'x', ',']
+const operacoes_nao_sinais = ['÷', 'X', 'x', ',', '/', '*', '.']
+const sinais = ['+', '-']
 const operacoes_reais = ['+', '-', '/', '*', '*', '.']
 const numeros = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
@@ -66,14 +68,14 @@ botoes.forEach((botao) => {
         }else if(valor_botao === 'AC'){
             input.value = valor_input.slice(0, valor_input.length - 1)
         }else {
-            if(operacoes.includes(valor_botao) && operacoes.includes(valor_input.slice(-1))) {
+            if(((sinais.includes(valor_botao) && sinais.includes(ultimo_valor)) || (valor_input.length === 0 && !(operacoes_nao_sinais.includes(valor_botao) && sinais.includes(ultimo_valor)) && !numeros.includes(valor_botao))) && operacoes_nao_sinais.includes(valor_botao) && operacoes_nao_sinais.includes(ultimo_valor)) {
                 let valor = valor_input.slice(0, valor_input.length - 1)
                 
                 input.value = `${valor}${valor_botao}`
-            } else if ((valor_input.length === 0 && (operacoes.includes(valor_botao) || operacoes_reais.includes(valor_botao)))) {
+            } else if ((valor_input.length === 0 && operacoes_nao_sinais.includes(valor_botao))) {
                 input.value = ''
-            }else if ((valor_botao === ')' && (!(temquantosvalor(valor_input_array, '(') >= temquantosvalor(valor_input_array, ')')))) || ((operacoes.includes(valor_botao) || operacoes_reais.includes(valor_botao)) && !numeros.includes(ultimo_valor))) {
-                input.value = valor_input
+            }else if ((valor_botao === ')' && (!(temquantosvalor(valor_input_array, '(') >= temquantosvalor(valor_input_array, ')')))) || ((operacoes.includes(valor_botao) || operacoes_reais.includes(valor_botao)) && !numeros.includes(ultimo_valor) && valor_input.length >= 1)) {
+                input.value = valor_input   
             }else {
                 input.value = valor_input + valor_botao   
             }
@@ -91,21 +93,25 @@ input.addEventListener('input', () => {
     if(!operacoes.includes(ultimo_valor) && !numeros.includes(ultimo_valor) && !operacoes_reais.includes(ultimo_valor) && !['(', ')'].includes(ultimo_valor)) {
         let valor = valor_input.slice(0, valor_input.length - 1)
         input.value = valor
-    }
-
-    
-    if ((operacoes.includes(ultimo_valor) && operacoes.includes(penultimo_valor)) || (operacoes_reais.includes(ultimo_valor) && operacoes_reais.includes(penultimo_valor)) || (operacoes_reais.includes(ultimo_valor) && operacoes.includes(penultimo_valor)) || (operacoes.includes(ultimo_valor) && operacoes_reais.includes(penultimo_valor))) { 
+    } else if ((sinais.includes(ultimo_valor) && sinais.includes(penultimo_valor)) || (valor_input.length === 1 && !(operacoes_nao_sinais.includes(ultimo_valor) && sinais.includes(penultimo_valor)) && !numeros.includes(ultimo_valor)) && (operacoes_nao_sinais.includes(ultimo_valor) && operacoes_nao_sinais.includes(penultimo_valor))) { 
         let valor = valor_input.slice(0, valor_input.length - 2)
-                
+    
         input.value = `${valor}${ultimo_valor}`
-    }
-
-    if (valor_input.length === 0 && (operacoes.includes(ultimo_valor) || operacoes_reais.includes(ultimo_valor))) {
-        input.value = ''
-    }
-
-    if ((ultimo_valor === ')' && (!(temquantosvalor(valor_input_array, '(') >= temquantosvalor(valor_input_array, ')'))) || ((operacoes.includes(ultimo_valor) || operacoes_reais.includes(ultimo_valor)) && !numeros.includes(penultimo_valor)))) {
+    } else if ((valor_input.length > 1 && operacoes_nao_sinais.includes(ultimo_valor) && sinais.includes(penultimo_valor))) {
         input.value = valor_input.slice(0, valor_input.length - 1)
+    } else if (valor_input.length === 1 && (operacoes_nao_sinais.includes(ultimo_valor) || ultimo_valor === ')')) {
+        input.value = ''
+    } else if (ultimo_valor === ')' && !(temquantosvalor(valor_input_array, '(') >= temquantosvalor(valor_input_array, ')'))) {
+        input.value = valor_input.slice(0, valor_input.length - 1)  
+    } else if (ultimo_valor === ')' && (!(numeros.includes(penultimo_valor)) || !penultimo_valor === ')')) {
+        input.value = valor_input.slice(0, valor_input.length - 1)
+    }else if(valor_input.length > 1) {
+        for(let i = 0; i < valor_input_array.length; i++) {   
+            if(!operacoes.includes(valor_input_array[i]) && !operacoes_reais.includes(valor_input_array[i]) && !numeros.includes(valor_input_array[i]) && !['(', ')'].includes(valor_input_array[i])) {
+                input.value = ''
+                i = valor_input_array
+            }
+        }
     }
 }) 
 
