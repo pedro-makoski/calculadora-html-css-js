@@ -33,15 +33,16 @@ main input:focus {
 
 .botoes {
     display: grid;
-    grid-template-rows: repeat(5, 1fr);
+    grid-template-rows: repeat(6, 1fr);
     grid-template-columns: repeat(4, 1fr);
     gap: 5px;
+    height: 300px;
 }
 
 .botoes button {
     border: none;
-    width: 50px;
-    height: 50px;
+    width: 100%;
+    height: 100%;
     border-radius: 15px;
     background-color: brown;
     color: white;
@@ -61,15 +62,30 @@ main input:focus {
 }
 
 .botoes button#igual-button {
-    grid-row-start: 3;
-    grid-row-end: 7;
-    grid-column-start: 4;
+    grid-row-start: 6;
+    grid-column-start: 1;
+    grid-column-end: 4;
     background-color: burlywood;
     height: 100%;
 }
 
+.botoes button#zero {
+    grid-column-start: 2;
+    grid-column-end: 4;
+}
+
+.botoes button#clear-last {
+    background-color: burlywood;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
 .botoes button#igual-button:active {
     background-color: rgba(222, 184, 135, 0.471);
+}
+
+.botoes button.operadores {
+    background-color: rgb(195, 72, 72);
 }
 
 @media screen and (max-width: 900px){
@@ -104,14 +120,14 @@ main input:focus {
 
     .botoes {
         width: 90%;
-        height: 50vh;
+        height: 70vh;
     }
 
     .botoes button {
         width: 100%;
         height: 100%;
         font-size: 3em;
-        border-radius: 50px;
+        border-radius: 30px;
     }
 }
 

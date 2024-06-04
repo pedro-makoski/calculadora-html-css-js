@@ -11,24 +11,26 @@
     <main> 
         <input type="text" id="operacao" autocomplete="off" aria-label="local de colocar operacao">
         <div class="botoes">
-            <button aria-label="digitar abre parenteses">(</button>
-            <button aria-label="digitar fecha parenteses">)</button>
-            <button aria-label="digitar mais">+</button>
-            <button aria-label="Limpar input">AC</button>
-            <button aria-label="Digitar menos">-</button>
-            <button aria-label="digitar operador da divisão">÷</button>
+            <button aria-label="Limpar última entrada" class="operadores" id="clear-last">AC</button>
+            <button aria-label="Limpar input" class="operadores">C</button>
+            <button aria-label="digitar abre parenteses" class="operadores">(</button>
+            <button aria-label="digitar fecha parenteses" class="operadores">)</button>
             <button aria-label="digitar 1">1</button>
-            <button aria-label="digitar o símbolo da multiplicação">X</button>
             <button aria-label="digitar 2">2</button>
+            <button aria-label="Digitar menos" class="operadores">-</button>
             <button aria-label="digitar 3">3</button>
             <button aria-label="digitar 4">4</button>
             <button aria-label="digitar 5">5</button>
+            <button aria-label="digitar mais" class="operadores">+</button>
             <button aria-label="digitar 6">6</button>
             <button aria-label="digitar 7">7</button>
             <button aria-label="digitar 8">8</button>
+            <button aria-label="digitar operador da divisão" class="operadores">÷</button>
             <button aria-label="digitar 9">9</button>
-            <button aria-label="digitar 9">0</button>
+            <button aria-label="digitar zero" id="zero">0</button>
+            <button aria-label="digitar virgula" class="operadores">,</button>
             <button id="igual-button" aria-label="ver resultado no input">=</button>
+            <button aria-label="digitar o símbolo da multiplicação" class="operadores">X</button>
         </div>
     </main>
     <script src="script.js"></script>

@@ -7,13 +7,22 @@ const numeros = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
 function eval_melhor(valor) {
     lista_a_partir_de_string = Array.from(valor)
+    const index_especiais = []
 
     for(let i = 0; i < lista_a_partir_de_string.length; i++) {
         if(operacoes.includes(lista_a_partir_de_string[i])) {
             let pos = operacoes.indexOf(lista_a_partir_de_string[i])
             lista_a_partir_de_string[i] = operacoes_reais[pos]
         }
+
+        if(lista_a_partir_de_string[i] === '(' && numeros.includes(lista_a_partir_de_string[i-1])) {
+            index_especiais.push(i)
+        }
     }
+
+    for(let i = 0; i < index_especiais.length; i++) {
+        lista_a_partir_de_string.splice(index_especiais[i] + i, 0, '*')
+    } 
 
     return eval(lista_a_partir_de_string.join(''))
 }
@@ -24,7 +33,7 @@ function gerar_resultado() {
             input.value = eval_melhor(input.value)
         }
     } catch {
-        input.value = 'ERROR: click in AC, and try other thing'
+        input.value = 'ERROR: click in C, and try other thing'
     }
 
 }
@@ -45,12 +54,15 @@ botoes.forEach((botao) => {
     botao.addEventListener('click', () => {
         valor_input = input.value
         valor_input_array = Array.from(valor_input)
+        let ultimo_valor = valor_input.slice(-1)
 
         let valor_botao = botao.innerHTML
-        if (valor_botao === 'AC') {
+        if (valor_botao === 'C') {
             input.value = ''
         } else if (valor_botao === '=') {
             gerar_resultado()
+        }else if(valor_botao === 'AC'){
+            input.value = valor_input.slice(0, valor_input.length - 1)
         }else {
             if(operacoes.includes(valor_botao) && operacoes.includes(valor_input.slice(-1))) {
                 let valor = valor_input.slice(0, valor_input.length - 1)
@@ -58,7 +70,7 @@ botoes.forEach((botao) => {
                 input.value = `${valor}${valor_botao}`
             } else if ((valor_input.length === 0 && (operacoes.includes(valor_botao) || operacoes_reais.includes(valor_botao)))) {
                 input.value = ''
-            }else if (valor_botao === ')' && !(temquantosvalor(valor_input_array, '(') === temquantosvalor(valor_input_array, ')') + 1)) {
+            }else if (valor_botao === ')' && ((temquantosvalor(valor_input_array, '(') >= temquantosvalor(valor_input_array, ')') + 1) || (!numeros.includes(ultimo_valor))) || ((operacoes.includes(valor_botao) || operacoes_reais.includes(valor_botao)) && !numeros.includes(ultimo_valor))) {
                 input.value = valor_input
             }else {
                 input.value = valor_input + valor_botao   
@@ -90,7 +102,9 @@ input.addEventListener('input', () => {
         input.value = ''
     }
 
-    if (ultimo_valor === ')' && !(temquantosvalor(valor_input_array, '(') === temquantosvalor(valor_input_array, ')'))) {
+    if ((ultimo_valor === ')' && (!(temquantosvalor(valor_input_array, '(') >= temquantosvalor(valor_input_array, ')')) || !numeros.includes(penultimo_valor) || (operacoes.includes(ultimo_valor) || operacoes_reais.includes(ultimo_valor)) && !numeros.includes(penultimo_valor)))) {
+        console.log((!(temquantosvalor(valor_input_array, '(') > temquantosvalor(valor_input_array, ')'))))
+        console.log((temquantosvalor(valor_input_array, '(') > temquantosvalor(valor_input_array, ')')))
         input.value = valor_input.slice(0, valor_input.length - 1)
     }
 }) 
