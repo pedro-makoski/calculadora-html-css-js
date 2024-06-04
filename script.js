@@ -15,7 +15,9 @@ function eval_melhor(valor) {
             lista_a_partir_de_string[i] = operacoes_reais[pos]
         }
 
-        if(lista_a_partir_de_string[i] === '(' && numeros.includes(lista_a_partir_de_string[i-1])) {
+        lista_a_partir_de_stringa_anterior = lista_a_partir_de_string[i-1]
+
+        if(lista_a_partir_de_string[i] === '(' && (numeros.includes(lista_a_partir_de_stringa_anterior) || lista_a_partir_de_stringa_anterior === ')')) {
             index_especiais.push(i)
         }
     }
@@ -70,7 +72,7 @@ botoes.forEach((botao) => {
                 input.value = `${valor}${valor_botao}`
             } else if ((valor_input.length === 0 && (operacoes.includes(valor_botao) || operacoes_reais.includes(valor_botao)))) {
                 input.value = ''
-            }else if ((valor_botao === ')' && ((temquantosvalor(valor_input_array, '(') >= temquantosvalor(valor_input_array, ')') + 1) || (!numeros.includes(ultimo_valor)))) || ((operacoes.includes(valor_botao) || operacoes_reais.includes(valor_botao)) && !numeros.includes(ultimo_valor))) {
+            }else if ((valor_botao === ')' && (!(temquantosvalor(valor_input_array, '(') >= temquantosvalor(valor_input_array, ')')))) || ((operacoes.includes(valor_botao) || operacoes_reais.includes(valor_botao)) && !numeros.includes(ultimo_valor))) {
                 input.value = valor_input
             }else {
                 input.value = valor_input + valor_botao   
@@ -102,7 +104,7 @@ input.addEventListener('input', () => {
         input.value = ''
     }
 
-    if ((ultimo_valor === ')' && (!(temquantosvalor(valor_input_array, '(') >= temquantosvalor(valor_input_array, ')')) || !numeros.includes(penultimo_valor))) || ((operacoes.includes(ultimo_valor) || operacoes_reais.includes(ultimo_valor)) && !numeros.includes(penultimo_valor))) {
+    if ((ultimo_valor === ')' && (!(temquantosvalor(valor_input_array, '(') >= temquantosvalor(valor_input_array, ')'))) || ((operacoes.includes(ultimo_valor) || operacoes_reais.includes(ultimo_valor)) && !numeros.includes(penultimo_valor)))) {
         input.value = valor_input.slice(0, valor_input.length - 1)
     }
 }) 
