@@ -1,9 +1,9 @@
 const botoes = document.querySelectorAll('.botoes button')
 const input = document.getElementById('operacao')
 
-const operacoes = ['+', '-', '÷', 'X', 'x']
-const operacoes_reais = ['+', '-', '/', '*', '*']
-const numeros = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+const operacoes = ['+', '-', '÷', 'X', 'x', ',']
+const operacoes_reais = ['+', '-', '/', '*', '*', '.']
+const numeros = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
 function eval_melhor(valor) {
     lista_a_partir_de_string = Array.from(valor)
@@ -19,14 +19,33 @@ function eval_melhor(valor) {
 }
 
 function gerar_resultado() {
-    if (input.value !== '') {
-        input.value = eval_melhor(input.value)
+    try {
+        if (input.value !== '') {
+            input.value = eval_melhor(input.value)
+        }
+    } catch {
+        input.value = 'ERROR: click in AC, and try other thing'
     }
+
+}
+
+function temquantosvalor(lista, valor) {
+    let count = 0
+
+    lista.forEach((item) => {
+        if (item === valor) {
+            count += 1
+        }
+    })
+
+    return count
 }
 
 botoes.forEach((botao) => {
     botao.addEventListener('click', () => {
         valor_input = input.value
+        valor_input_array = Array.from(valor_input)
+
         let valor_botao = botao.innerHTML
         if (valor_botao === 'AC') {
             input.value = ''
@@ -37,8 +56,12 @@ botoes.forEach((botao) => {
                 let valor = valor_input.slice(0, valor_input.length - 1)
                 
                 input.value = `${valor}${valor_botao}`
-            } else {
-                input.value = valor_input + valor_botao
+            } else if ((valor_input.length === 0 && (operacoes.includes(valor_botao) || operacoes_reais.includes(valor_botao)))) {
+                input.value = ''
+            }else if (valor_botao === ')' && !(temquantosvalor(valor_input_array, '(') === temquantosvalor(valor_input_array, ')') + 1)) {
+                input.value = valor_input
+            }else {
+                input.value = valor_input + valor_botao   
             }
         }
     })
@@ -46,6 +69,7 @@ botoes.forEach((botao) => {
 
 input.addEventListener('input', () => {
     let valor_input = input.value
+    valor_input_array = Array.from(valor_input)
 
     let ultimo_valor = valor_input.slice(-1)
     let penultimo_valor = valor_input.slice(-2, -1)
@@ -60,6 +84,14 @@ input.addEventListener('input', () => {
         let valor = valor_input.slice(0, valor_input.length - 2)
                 
         input.value = `${valor}${ultimo_valor}`
+    }
+
+    if (valor_input.length === 0 && (operacoes.includes(ultimo_valor) || operacoes_reais.includes(ultimo_valor))) {
+        input.value = ''
+    }
+
+    if (ultimo_valor === ')' && !(temquantosvalor(valor_input_array, '(') === temquantosvalor(valor_input_array, ')'))) {
+        input.value = valor_input.slice(0, valor_input.length - 1)
     }
 }) 
 
