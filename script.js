@@ -70,7 +70,7 @@ botoes.forEach((botao) => {
                 input.value = `${valor}${valor_botao}`
             } else if ((valor_input.length === 0 && (operacoes.includes(valor_botao) || operacoes_reais.includes(valor_botao)))) {
                 input.value = ''
-            }else if (valor_botao === ')' && ((temquantosvalor(valor_input_array, '(') >= temquantosvalor(valor_input_array, ')') + 1) || (!numeros.includes(ultimo_valor))) || ((operacoes.includes(valor_botao) || operacoes_reais.includes(valor_botao)) && !numeros.includes(ultimo_valor))) {
+            }else if ((valor_botao === ')' && ((temquantosvalor(valor_input_array, '(') >= temquantosvalor(valor_input_array, ')') + 1) || (!numeros.includes(ultimo_valor)))) || ((operacoes.includes(valor_botao) || operacoes_reais.includes(valor_botao)) && !numeros.includes(ultimo_valor))) {
                 input.value = valor_input
             }else {
                 input.value = valor_input + valor_botao   
@@ -102,9 +102,7 @@ input.addEventListener('input', () => {
         input.value = ''
     }
 
-    if ((ultimo_valor === ')' && (!(temquantosvalor(valor_input_array, '(') >= temquantosvalor(valor_input_array, ')')) || !numeros.includes(penultimo_valor) || (operacoes.includes(ultimo_valor) || operacoes_reais.includes(ultimo_valor)) && !numeros.includes(penultimo_valor)))) {
-        console.log((!(temquantosvalor(valor_input_array, '(') > temquantosvalor(valor_input_array, ')'))))
-        console.log((temquantosvalor(valor_input_array, '(') > temquantosvalor(valor_input_array, ')')))
+    if ((ultimo_valor === ')' && (!(temquantosvalor(valor_input_array, '(') >= temquantosvalor(valor_input_array, ')')) || !numeros.includes(penultimo_valor))) || ((operacoes.includes(ultimo_valor) || operacoes_reais.includes(ultimo_valor)) && !numeros.includes(penultimo_valor))) {
         input.value = valor_input.slice(0, valor_input.length - 1)
     }
 }) 
