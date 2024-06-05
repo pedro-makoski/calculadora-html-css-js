@@ -89,7 +89,7 @@ main input:focus {
     background-color: rgb(195, 72, 72);
 }
 
-@media screen and (max-width: 900px){
+@media screen and (max-width: 700px){
     body {
         justify-content: start;
         align-items: start;

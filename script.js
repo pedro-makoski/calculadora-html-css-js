@@ -2,7 +2,7 @@ const botoes = document.querySelectorAll('.botoes button')
 const input = document.getElementById('operacao')
 
 const operacoes = ['+', '-', '÷', 'X', 'x', ',']
-const operacoes_nao_sinais = ['/', '*', '.', 'x', 'X', '÷']
+const operacoes_nao_sinais = ['/', '*', '.', 'x', 'X', '÷', ',']
 const todas_operacoes = ['÷', 'X', 'x', ',', '/', '*', '.', '+', '-', '/', '*']
 const sinais = ['+', '-']
 const operacoes_reais = ['+', '-', '/', '*', '*', '.']
@@ -75,20 +75,26 @@ botoes.forEach((botao) => {
             if(!operacoes.includes(valor_botao) && !numeros.includes(valor_botao) && !operacoes_reais.includes(valor_botao) && !['(', ')'].includes(valor_botao)) {
                 let valor = valor_input
                 input.value = valor
+            }  else if (operacoes_nao_sinais.includes(valor_botao) && (ultimo_valor === '(' || sinais.includes(ultimo_valor))) {
+                input.value = valor_input
             } else if (todas_operacoes.includes(valor_botao) && todas_operacoes.includes(ultimo_valor)) { 
                 let valor = valor_input.slice(0, valor_input.length - 1)
-            
+                
                 input.value = `${valor}${valor_botao}`
-            } else if ((valor_input.length > 1 && operacoes_nao_sinais.includes(valor_botao) && (sinais.includes(ultimo_valor))) || (todas_operacoes.includes(valor_botao) && ultimo_valor === '(')) {
-                input.value = valor_input
             } else if (valor_input.length === 0 && (operacoes_nao_sinais.includes(valor_botao) || valor_botao === ')')) {
                 input.value = ''
                 console.log(input)
-            } else if (valor_botao === ')' && !(temquantosvalor(valor_input_array, '(') > temquantosvalor(valor_input_array, ')')) && !(numeros.includes(ultimo_valor))) {
+            } else if (valor_botao === ')' && (temquantosvalor(valor_input_array, '(') <= temquantosvalor(valor_input_array, ')')) && !(numeros.includes(ultimo_valor))) {
                 input.value = valor_input  
             }else {
-                input.value = valor_input + valor_botao   
+                if(!numeros.includes(ultimo_valor) && ultimo_valor !== ')' && valor_botao === ')') {
+                    input.value = valor_input
+                    console.log(input.value)
+                } else {
+                    input.value = valor_input + valor_botao   
+                }
             }
+
         }
     })
 })
@@ -103,6 +109,8 @@ input.addEventListener('input', () => {
     if(!operacoes.includes(ultimo_valor) && !numeros.includes(ultimo_valor) && !operacoes_reais.includes(ultimo_valor) && !['(', ')'].includes(ultimo_valor)) {
         let valor = valor_input.slice(0, valor_input.length - 1)
         input.value = valor
+    }else if (operacoes_nao_sinais.includes(ultimo_valor) && (penultimo_valor === '(' || sinais.includes(penultimo_valor))) {
+        input.value = valor_input.slice(0, valor_input.length - 1)
     } else if (todas_operacoes.includes(ultimo_valor) && todas_operacoes.includes(penultimo_valor)) { 
         let valor = valor_input.slice(0, valor_input.length - 2)
     
@@ -111,7 +119,11 @@ input.addEventListener('input', () => {
         input.value = valor_input.slice(0, valor_input.length - 1)
     } else if (valor_input.length === 1 && (operacoes_nao_sinais.includes(ultimo_valor) || ultimo_valor === ')')) {
         input.value = ''
-    } else if (ultimo_valor === ')' && !(temquantosvalor(valor_input_array, '(') >= temquantosvalor(valor_input_array, ')'))) {
+    } else if (ultimo_valor === ')' && (temquantosvalor(valor_input_array, '(') < temquantosvalor(valor_input_array, ')'))) {
+        input.value = valor_input.slice(0, valor_input.length - 1)
+    }
+
+    if(!numeros.includes(penultimo_valor) && penultimo_valor !== ')' && ultimo_valor === ')') {
         input.value = valor_input.slice(0, valor_input.length - 1)
     }
 }) 
