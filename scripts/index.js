@@ -32,18 +32,23 @@ function eval_melhor(valor) {
         lista_a_partir_de_string.splice(index_especiais[i] + i, 0, '*')
     } 
 
-    return eval(lista_a_partir_de_string.join(''))
+    let separated_parenteses = separate_parenteses_and_calculate(lista_a_partir_de_string.join(''))
+    let [numbers, operators] = separate(separated_parenteses)
+    let div_mul_aplicated = operate(numbers, operators)
+    let result = sum_all(div_mul_aplicated)
+
+    return result
 }
 
 function gerar_resultado() {
     try {
         if (input.value !== '') {
             input.value = eval_melhor(input.value)
-        }
-    } catch {
+        } 
+        
+    }catch {
         input.value = 'ERROR: click in C, and try other thing'
     }
-
 }
 
 function temquantosvalor(lista, valor) {
