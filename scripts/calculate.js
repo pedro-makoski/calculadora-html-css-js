@@ -145,12 +145,13 @@ function pos_of_parenteses(str) {
     for(let i = 0; i < arr.length; i++) {
        if(arr[i] === '(') {
             pos_open_parenteses.push(i)
-            pos_close_parenteses.push(0)
+        } else if (arr[i] == ')') {
+            pos_close_parenteses.push(i)
         }
     }
 
     for(let i = 0; i < arr.length; i++) { 
-       if(arr[i] === ')') {
+       if(arr[i] === ')' && pos_close_parenteses.length === pos_open_parenteses.length) {
             let mais_proximo = i - pos_open_parenteses[0];
             let mais_proximo_idx = 0
             
@@ -164,6 +165,8 @@ function pos_of_parenteses(str) {
             pos_close_parenteses_ja_foi[mais_proximo_idx] = true
 
             pos_close_parenteses[mais_proximo_idx] = i
+        } else if(pos_close_parenteses.length !== pos_open_parenteses.length && pos_close_parenteses.length !== 0){
+            throw new Error("Você esqueceu dos parenteses")
         }
     }
 
