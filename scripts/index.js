@@ -114,6 +114,24 @@ input.addEventListener('input', () => {
     let penultimo_valor = valor_input.slice(-2, -1)
     let idx_ultimo_valor = 0
 
+    if(!operacoes.includes(ultimo_valor) && !numeros.includes(ultimo_valor) && !operacoes_reais.includes(ultimo_valor) && !['(', ')'].includes(ultimo_valor) && input.value !== '') {
+        input.value = valor_input.slice(0, valor_input.length - 1)
+    }else if (operacoes_nao_sinais.includes(ultimo_valor) && (penultimo_valor === '(' || sinais.includes(penultimo_valor))) {
+        input.value = valor_input.slice(0, valor_input.length - 1)
+    } else if (todas_operacoes.includes(ultimo_valor) && todas_operacoes.includes(penultimo_valor)) { 
+        input.value = `${penultimo_valor}${ultimo_valor}`
+    } else if ((valor_input.length > 1 && operacoes_nao_sinais.includes(ultimo_valor) && sinais.includes(ultimo_valor))) {
+        input.value = valor_input.slice(0, valor_input.length - 2)
+    } else if (valor_input.length === 1 && (operacoes_nao_sinais.includes(ultimo_valor) || ultimo_valor === ')')) {
+        input.value = ''
+    } else if (ultimo_valor === ')' && (temquantosvalor(valor_input_array, '(') < temquantosvalor(valor_input_array, ')'))) {
+        input.value = valor_input.slice(0, valor_input.length - 1)
+    } 
+
+    if(!numeros.includes(penultimo_valor) && penultimo_valor !== ')' && ultimo_valor === ')') {
+        input.value = valor_input.slice(0, valor_input.length - 1)
+    }
+
     if(valor_input.length > 1) {
         for(let i = 0; i < valor_input_array.length; i++) {
             if(valor_input_array[i] !== anciant_input[i]) {
