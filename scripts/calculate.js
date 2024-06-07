@@ -194,10 +194,3 @@ function separate_parenteses_and_calculate(str) {
 
     return str_new 
 }
-
-let separated_parenteses = separate_parenteses_and_calculate('(10+10)*5')
-let [numbers, operators] = separate(separated_parenteses)
-
-let operator_aplicated = operate(numbers, operators)
-let result = sum_all(operator_aplicated)
-console.log(result)
