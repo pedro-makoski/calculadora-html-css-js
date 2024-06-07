@@ -42,7 +42,7 @@ function separate(str) {
 }
 
 
-function operate(numbers, operador) {
+function operate(numbers) {
     let operator_aplicated = numbers
     const operator = ['*', '/', '^']
     const levels_operator = [1, 1, 2]
@@ -165,7 +165,7 @@ function pos_of_parenteses(str) {
             pos_close_parenteses_ja_foi[mais_proximo_idx] = true
 
             pos_close_parenteses[mais_proximo_idx] = i
-        } else if(pos_close_parenteses.length !== pos_open_parenteses.length && pos_close_parenteses.length !== 0){
+        } else if(pos_close_parenteses.length !== pos_open_parenteses.length && pos_open_parenteses.length !== 0){
             throw new Error("Você esqueceu dos parenteses")
         }
     }

@@ -47,11 +47,7 @@ function gerar_resultado() {
         } 
         
     }catch (e){
-        if(e === "Você esqueceu dos parenteses") {
-            input.value = "Você esqueceu dos parenteses"
-        } else {
-            input.value = "ERRO: alguma coisa deu errado, tente novamente com outra coisa."
-        }
+        input.value = e
     }
 }
 
