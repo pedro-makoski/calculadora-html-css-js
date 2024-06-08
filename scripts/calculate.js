@@ -1,6 +1,7 @@
 function separate(str) {
     let lista_str = Array.from(str)
     const numbers = []
+    const operator = ['*', '/', '^', '+', '-']
     const operators = []
 
     let valor_anterior = NaN
@@ -9,10 +10,16 @@ function separate(str) {
         let valor = ['+', '-'].includes(lista_str[i]) || lista_str[i] === '.' ? `${lista_str[i]}` : parseFloat(lista_str[i])
     
         if(!isNaN(valor) || valor === '.' || ((lista_str[i] === '+' || lista_str[i] === '-'))) {
-            if(((isNaN(valor_anterior) || (valor === '+' || valor === '-'))) && (valor_anterior !== '+' && valor_anterior !== '-')) {
+            if((valor === '+' || valor === '-') && (lista_str.length - 1 === i && operator.includes(lista_str[i]))){
+                throw new Error("Você esqueceu de colocar o ultimo valor")
+            }else if(((isNaN(valor_anterior) || (valor === '+' || valor === '-'))) && (valor_anterior !== '+' && valor_anterior !== '-')) {
                 numbers.push(valor)
                 valor_anterior = valor
             }else if(valor_anterior === '+' || valor_anterior === '-') {
+                if(operator.includes(valor_anterior)) {
+                    throw new Error("Não se pode colocar operador depois de operador")
+                }
+
                 let valor_junto = parseFloat(`${valor_anterior}${valor}`)
                 let idx = numbers.lastIndexOf(valor_anterior)
 
@@ -32,6 +39,11 @@ function separate(str) {
                 valor_anterior = valor_junto
             }
         } else {
+            if(operator.includes(valor_anterior)) {
+                throw new Error("Não se pode colocar operador depois de operador")
+            } else if(lista_str.length - 1 === i && operator.includes(lista_str[i])) {
+                throw new Error("Você esqueceu de colocar o ultimo valor")
+            }
             numbers.push(lista_str[i])
             operators.push(lista_str[i])
             valor_anterior = NaN

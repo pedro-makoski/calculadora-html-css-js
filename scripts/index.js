@@ -77,15 +77,15 @@ botoes.forEach((botao) => {
         }else if(valor_botao === 'AC'){
             input.value = valor_input.slice(0, valor_input.length - 1)
         }else {
-            if(!operacoes.includes(valor_botao) && !numeros.includes(valor_botao) && !operacoes_reais.includes(valor_botao) && !['(', ')'].includes(valor_botao)) {
+            if(todas_operacoes.includes(valor_botao) && todas_operacoes.includes(ultimo_valor)){
+                let valor = valor_input.slice(0, valor_input.length - 1)
+                
+                input.value = `${valor}${valor_botao}` 
+            } else if(!operacoes.includes(valor_botao) && !numeros.includes(valor_botao) && !operacoes_reais.includes(valor_botao) && !['(', ')'].includes(valor_botao)) {
                 let valor = valor_input
                 input.value = valor
             }  else if (operacoes_nao_sinais.includes(valor_botao) && (ultimo_valor === '(' || sinais.includes(ultimo_valor))) {
                 input.value = valor_input
-            } else if (todas_operacoes.includes(valor_botao) && todas_operacoes.includes(ultimo_valor)) { 
-                let valor = valor_input.slice(0, valor_input.length - 1)
-                
-                input.value = `${valor}${valor_botao}`
             } else if (valor_input.length === 0 && (operacoes_nao_sinais.includes(valor_botao) || valor_botao === ')')) {
                 input.value = ''
                 console.log(input)
