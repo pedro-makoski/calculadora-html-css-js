@@ -15,8 +15,8 @@ function separate(str) {
             }else if(((isNaN(valor_anterior) || (valor === '+' || valor === '-'))) && (valor_anterior !== '+' && valor_anterior !== '-')) {
                 numbers.push(valor)
                 valor_anterior = valor
-            }else if(valor_anterior === '+' || valor_anterior === '-') {
-                if(operator.includes(valor_anterior)) {
+            }else if((valor_anterior === '+' || valor_anterior === '-')) {
+                if(operator.includes(valor_anterior) && operator.includes(valor)) {
                     throw new Error("Não se pode colocar operador depois de operador")
                 }
 
@@ -39,7 +39,7 @@ function separate(str) {
                 valor_anterior = valor_junto
             }
         } else {
-            if(operator.includes(valor_anterior)) {
+            if(operator.includes(valor_anterior) && operator.includes(valor)) {
                 throw new Error("Não se pode colocar operador depois de operador")
             } else if(lista_str.length - 1 === i && operator.includes(lista_str[i])) {
                 throw new Error("Você esqueceu de colocar o ultimo valor")
