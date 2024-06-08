@@ -88,13 +88,11 @@ botoes.forEach((botao) => {
                 input.value = valor_input
             } else if (valor_input.length === 0 && (operacoes_nao_sinais.includes(valor_botao) || valor_botao === ')')) {
                 input.value = ''
-                console.log(input)
             } else if (valor_botao === ')' && (temquantosvalor(valor_input_array, '(') <= temquantosvalor(valor_input_array, ')')) && !(numeros.includes(ultimo_valor))) {
                 input.value = valor_input  
             }else {
                 if(!numeros.includes(ultimo_valor) && ultimo_valor !== ')' && valor_botao === ')') {
                     input.value = valor_input
-                    console.log(input.value)
                 } else {
                     input.value = valor_input + valor_botao   
                 }
