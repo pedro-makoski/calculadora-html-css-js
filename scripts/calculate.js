@@ -11,7 +11,7 @@ function separate(str) {
     
         if(!isNaN(valor) || valor === '.' || ((lista_str[i] === '+' || lista_str[i] === '-'))) {
             if((valor === '+' || valor === '-') && (lista_str.length - 1 === i && operator.includes(lista_str[i]))){
-                throw new Error("Você esqueceu de colocar o ultimo valor")
+                throw new Error("Você se esqueceu de colocar o ultimo valor")
             }else if(((isNaN(valor_anterior) || (valor === '+' || valor === '-'))) && (valor_anterior !== '+' && valor_anterior !== '-')) {
                 numbers.push(valor)
                 valor_anterior = valor
@@ -42,7 +42,7 @@ function separate(str) {
             if(operator.includes(valor_anterior) && operator.includes(valor)) {
                 throw new Error("Não se pode colocar operador depois de operador")
             } else if(lista_str.length - 1 === i && operator.includes(lista_str[i])) {
-                throw new Error("Você esqueceu de colocar o ultimo valor")
+                throw new Error("Você se esqueceu de colocar o ultimo valor")
             }
             numbers.push(lista_str[i])
             operators.push(lista_str[i])
@@ -178,7 +178,7 @@ function pos_of_parenteses(str) {
 
             pos_close_parenteses[mais_proximo_idx] = i
         } else if(pos_close_parenteses.length !== pos_open_parenteses.length && pos_open_parenteses.length !== 0){
-            throw new Error("Você esqueceu dos parenteses")
+            throw new Error("Você se esqueceu dos parenteses")
         }
     }
 
