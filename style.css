@@ -84,7 +84,6 @@ main input {
 }
 
 .botoes button#clear-last {
-    background-color: var(--cor-destaque);
     grid-row-start: 1;
     grid-row-end: 3;
 }
