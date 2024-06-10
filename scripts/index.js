@@ -44,13 +44,13 @@ function gerar_resultado() {
     try {
         if (input.value !== '') {
             input.value = eval_melhor(input.value)
-            setTimeout(() => {
-                input.selectionStart = input.selectionEnd = input.value.length
-            }, 0)
         } 
         
     }catch (e){
-        input.value = e
+        alert(e)
+    } finally {
+        input.focus()
+        input.selectionStart = input.selectionEnd = input.value.length
     }
 }
 
