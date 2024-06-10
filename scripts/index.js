@@ -68,6 +68,7 @@ botoes.forEach((botao) => {
         valor_input = input.value
         valor_input_array = Array.from(valor_input)
         let ultimo_valor = valor_input.slice(-1)
+        let penultimo_valor = valor_input.slice(-2)
 
         let valor_botao = botao.innerHTML
         if (valor_botao === 'C') {
@@ -77,7 +78,7 @@ botoes.forEach((botao) => {
         }else if(valor_botao === 'AC'){
             input.value = valor_input.slice(0, valor_input.length - 1)
         }else {
-            if(todas_operacoes.includes(valor_botao) && todas_operacoes.includes(ultimo_valor)){
+            if(todas_operacoes.includes(valor_botao) && todas_operacoes.includes(ultimo_valor) && numeros.includes(penultimo_valor)){
                 let valor = valor_input.slice(0, valor_input.length - 1)
                 
                 input.value = `${valor}${valor_botao}` 
@@ -110,9 +111,10 @@ input.addEventListener('input', () => {
 
     let ultimo_valor = valor_input.slice(-1)
     let penultimo_valor = valor_input.slice(-2, -1)
+    let antepenultimo_valor = valor_input.slice(-3, -1)
     let idx_ultimo_valor = 0
 
-    if (todas_operacoes.includes(ultimo_valor) && todas_operacoes.includes(penultimo_valor)) { 
+    if (todas_operacoes.includes(ultimo_valor) && todas_operacoes.includes(penultimo_valor) && numeros.includes(antepenultimo_valor)) { 
         input.value = `${penultimo_valor}${ultimo_valor}`
     } else if(!operacoes.includes(ultimo_valor) && !numeros.includes(ultimo_valor) && !operacoes_reais.includes(ultimo_valor) && !['(', ')'].includes(ultimo_valor) && input.value !== '') {
         input.value = valor_input.slice(0, valor_input.length - 1)
@@ -135,6 +137,7 @@ input.addEventListener('input', () => {
             if(valor_input_array[i] !== anciant_input[i]) {
                 ultimo_valor = valor_input_array[i]
                 penultimo_valor = valor_input_array[i-1]
+                antepenultimo_valor = valor_input_array[i-2]
                 idx_ultimo_valor = i
                 i = valor_input_array.length
             } 
@@ -142,7 +145,7 @@ input.addEventListener('input', () => {
     }
 
 
-    if (todas_operacoes.includes(ultimo_valor) && todas_operacoes.includes(penultimo_valor)) { 
+    if (todas_operacoes.includes(ultimo_valor) && todas_operacoes.includes(penultimo_valor) && numeros.includes(antepenultimo_valor)) { 
         valor_input_array[idx_ultimo_valor - 1] = ultimo_valor
         valor_input_array.splice(idx_ultimo_valor, 1)
         input.value = valor_input_array.join('')
