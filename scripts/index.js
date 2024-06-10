@@ -44,6 +44,9 @@ function gerar_resultado() {
     try {
         if (input.value !== '') {
             input.value = eval_melhor(input.value)
+            setTimeout(() => {
+                input.selectionStart = input.selectionEnd = input.value.length
+            }, 0)
         } 
         
     }catch (e){
@@ -68,7 +71,9 @@ botoes.forEach((botao) => {
         valor_input = input.value
         valor_input_array = Array.from(valor_input)
         let ultimo_valor = valor_input.slice(-1)
-        let penultimo_valor = valor_input.slice(-2)
+        let penultimo_valor = valor_input.slice(-2, -1)
+
+        console.log(penultimo_valor)
 
         let valor_botao = botao.innerHTML
         if (valor_botao === 'C') {
@@ -78,7 +83,7 @@ botoes.forEach((botao) => {
         }else if(valor_botao === 'AC'){
             input.value = valor_input.slice(0, valor_input.length - 1)
         }else {
-            if(todas_operacoes.includes(valor_botao) && todas_operacoes.includes(ultimo_valor) && numeros.includes(penultimo_valor)){
+            if(todas_operacoes.includes(valor_botao) && todas_operacoes.includes(ultimo_valor) && (numeros.includes(penultimo_valor) || sinais.includes(valor_botao))){
                 let valor = valor_input.slice(0, valor_input.length - 1)
                 
                 input.value = `${valor}${valor_botao}` 
@@ -100,6 +105,9 @@ botoes.forEach((botao) => {
             }
 
         }
+
+        input.focus()
+        input.selectionStart = input.selectionEnd = input.value.length
     })
 })
 
@@ -111,10 +119,10 @@ input.addEventListener('input', () => {
 
     let ultimo_valor = valor_input.slice(-1)
     let penultimo_valor = valor_input.slice(-2, -1)
-    let antepenultimo_valor = valor_input.slice(-3, -1)
+    let antepenultimo_valor = valor_input.slice(-3, -2)
     let idx_ultimo_valor = 0
 
-    if (todas_operacoes.includes(ultimo_valor) && todas_operacoes.includes(penultimo_valor) && numeros.includes(antepenultimo_valor)) { 
+    if (todas_operacoes.includes(ultimo_valor) && todas_operacoes.includes(penultimo_valor) && (numeros.includes(antepenultimo_valor) || sinais.includes(ultimo_valor))) { 
         input.value = `${penultimo_valor}${ultimo_valor}`
     } else if(!operacoes.includes(ultimo_valor) && !numeros.includes(ultimo_valor) && !operacoes_reais.includes(ultimo_valor) && !['(', ')'].includes(ultimo_valor) && input.value !== '') {
         input.value = valor_input.slice(0, valor_input.length - 1)
@@ -145,7 +153,7 @@ input.addEventListener('input', () => {
     }
 
 
-    if (todas_operacoes.includes(ultimo_valor) && todas_operacoes.includes(penultimo_valor) && numeros.includes(antepenultimo_valor)) { 
+    if (todas_operacoes.includes(ultimo_valor) && todas_operacoes.includes(penultimo_valor) && (numeros.includes(antepenultimo_valor) || sinais.includes(ultimo_valor))) { 
         valor_input_array[idx_ultimo_valor - 1] = ultimo_valor
         valor_input_array.splice(idx_ultimo_valor, 1)
         input.value = valor_input_array.join('')
@@ -166,6 +174,10 @@ input.addEventListener('input', () => {
     }
 
     anciant_input = input.value
+
+    setTimeout(() => {
+        input.selectionStart = input.selectionEnd = input.value.length
+    }, 0)
 }) 
 
 input.addEventListener('keyup', (e) => {

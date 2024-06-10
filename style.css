@@ -3,9 +3,8 @@
     --cor-principal: #A63754; 
     --sombra: 1px 1px 3px 1px rgba(0, 0, 0, 0.51);
     --botao-clicado: #a6375582;
-    --cor-secundaria: #454259;
     --cor-destaque: #454259; 
-
+    --cor-destaque-clicado: #45425984;
 }
 
 body {
@@ -33,14 +32,11 @@ main input {
     margin-bottom: 13px;
     border: none;
     border-radius: 20px;
-    background-color: var(--cor-secundaria);
+    background-color: var(--cor-destaque);
     box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.592);
     text-align: right;
     font-size: 1.2em;
     color: white;
-}
-
-main input:focus {
     outline: 3px solid var(--cor-principal);
 }
 
@@ -70,7 +66,7 @@ main input:focus {
 }
 
 .botoes button:active {
-    background-color: var(--botao-clicado) !important;
+    background-color: var(--botao-clicado);
     box-shadow: 0.2px 0.2px 3px 1px rgba(0, 0, 0, 0.51);
 }
 
@@ -95,6 +91,10 @@ main input:focus {
 
 .botoes button.operadores {
     background-color: var(--cor-destaque);
+}
+
+.botoes button.operadores:active {
+    background-color: var(--cor-destaque-clicado);
 }
 
 @media screen and (max-width: 700px){
