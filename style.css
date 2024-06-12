@@ -38,6 +38,7 @@ main input {
     font-size: 1.2em;
     color: white;
     outline: 3px solid var(--cor-principal);
+    
 }
 
 .botoes {

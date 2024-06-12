@@ -10,7 +10,7 @@ const numeros = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
 
 if( navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i)|| navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i)){
-    input.style.userSelect = 'none'
+    input.readOnly = true;
 }
 
 function eval_melhor(valor) {
@@ -153,36 +153,38 @@ input.addEventListener('input', () => {
                 antepenultimo_valor = valor_input_array[i-2]
                 idx_ultimo_valor = i
                 i = valor_input_array.length
+
+
+                if (todas_operacoes.includes(ultimo_valor) && todas_operacoes.includes(penultimo_valor) && (numeros.includes(antepenultimo_valor) || sinais.includes(ultimo_valor))) { 
+                    valor_input_array[idx_ultimo_valor - 1] = ultimo_valor
+                    valor_input_array.splice(idx_ultimo_valor, 1)
+                    input.value = valor_input_array.join('')
+                } else if(!operacoes.includes(ultimo_valor) && !numeros.includes(ultimo_valor) && !operacoes_reais.includes(ultimo_valor) && !['(', ')'].includes(ultimo_valor) && input.value !== '') {
+                    input.value = anciant_input
+                }else if (operacoes_nao_sinais.includes(ultimo_valor) && (penultimo_valor === '(' || sinais.includes(penultimo_valor))) {
+                    input.value = anciant_input
+                } else if ((valor_input.length > 1 && operacoes_nao_sinais.includes(ultimo_valor) && sinais.includes(ultimo_valor))) {
+                    input.value = valor_input.slice(0, valor_input.length - 1)
+                } else if (valor_input.length === 1 && (operacoes_nao_sinais.includes(ultimo_valor) || ultimo_valor === ')')) {
+                    input.value = ''
+                } else if (ultimo_valor === ')' && (temquantosvalor(valor_input_array, '(') < temquantosvalor(valor_input_array, ')'))) {
+                    input.value = anciant_input
+                } else if(operacoes.includes(ultimo_valor) && (penultimo_valor === undefined || (!numeros.includes(penultimo_valor) && !operacoes.includes(ultimo_valor)))) {
+                    input.value = anciant_input
+                }
+            
+                if(!numeros.includes(penultimo_valor) && penultimo_valor !== ')' && ultimo_valor === ')') {
+                    input.value = anciant_input
+                }
+            
+                anciant_input = input.value
+            
+                setTimeout(() => {
+                    input.selectionStart = input.selectionEnd = input.value.length
+                }, 0)
             } 
         }
     }
-
-
-    if (todas_operacoes.includes(ultimo_valor) && todas_operacoes.includes(penultimo_valor) && (numeros.includes(antepenultimo_valor) || sinais.includes(ultimo_valor))) { 
-        valor_input_array[idx_ultimo_valor - 1] = ultimo_valor
-        valor_input_array.splice(idx_ultimo_valor, 1)
-        input.value = valor_input_array.join('')
-    } else if(!operacoes.includes(ultimo_valor) && !numeros.includes(ultimo_valor) && !operacoes_reais.includes(ultimo_valor) && !['(', ')'].includes(ultimo_valor) && input.value !== '') {
-        input.value = anciant_input
-    }else if (operacoes_nao_sinais.includes(ultimo_valor) && (penultimo_valor === '(' || sinais.includes(penultimo_valor))) {
-        input.value = anciant_input
-    } else if ((valor_input.length > 1 && operacoes_nao_sinais.includes(ultimo_valor) && sinais.includes(ultimo_valor))) {
-        input.value = valor_input.slice(0, valor_input.length - 1)
-    } else if (valor_input.length === 1 && (operacoes_nao_sinais.includes(ultimo_valor) || ultimo_valor === ')')) {
-        input.value = ''
-    } else if (ultimo_valor === ')' && (temquantosvalor(valor_input_array, '(') < temquantosvalor(valor_input_array, ')'))) {
-        input.value = anciant_input
-    } 
-
-    if(!numeros.includes(penultimo_valor) && penultimo_valor !== ')' && ultimo_valor === ')') {
-        input.value = anciant_input
-    }
-
-    anciant_input = input.value
-
-    setTimeout(() => {
-        input.selectionStart = input.selectionEnd = input.value.length
-    }, 0)
 }) 
 
 input.addEventListener('keyup', (e) => {
