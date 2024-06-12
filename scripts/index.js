@@ -13,6 +13,8 @@ if( navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i)
     input.readOnly = true;
 }
 
+let anciant_input = ''
+
 function eval_melhor(valor) {
     lista_a_partir_de_string = Array.from(valor)
     const index_especiais = []
@@ -49,6 +51,7 @@ function gerar_resultado() {
     try {
         if (input.value !== '') {
             input.value = eval_melhor(input.value)
+            anciant_input = input.value
         } 
         
     }catch (e){
@@ -116,8 +119,6 @@ botoes.forEach((botao) => {
     })
 })
 
-let anciant_input = ''
-
 input.addEventListener('input', () => {
     let valor_input = input.value
     valor_input_array = Array.from(valor_input)
@@ -148,6 +149,7 @@ input.addEventListener('input', () => {
     if(valor_input.length > 1) {
         for(let i = 0; i < valor_input_array.length; i++) {
             if(valor_input_array[i] !== anciant_input[i]) {
+                console.log('oi')
                 ultimo_valor = valor_input_array[i]
                 penultimo_valor = valor_input_array[i-1]
                 antepenultimo_valor = valor_input_array[i-2]
@@ -184,7 +186,9 @@ input.addEventListener('input', () => {
                 }, 0)
             } 
         }
+
     }
+    anciant_input = input.value
 }) 
 
 input.addEventListener('keyup', (e) => {
