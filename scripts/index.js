@@ -149,7 +149,6 @@ input.addEventListener('input', () => {
     if(valor_input.length > 1) {
         for(let i = 0; i < valor_input_array.length; i++) {
             if(valor_input_array[i] !== anciant_input[i]) {
-                console.log('oi')
                 ultimo_valor = valor_input_array[i]
                 penultimo_valor = valor_input_array[i-1]
                 antepenultimo_valor = valor_input_array[i-2]
@@ -171,7 +170,7 @@ input.addEventListener('input', () => {
                     input.value = ''
                 } else if (ultimo_valor === ')' && (temquantosvalor(valor_input_array, '(') < temquantosvalor(valor_input_array, ')'))) {
                     input.value = anciant_input
-                } else if(operacoes.includes(ultimo_valor) && (penultimo_valor === undefined || (!numeros.includes(penultimo_valor) && !operacoes.includes(ultimo_valor)))) {
+                } else if(operacoes_nao_sinais.includes(ultimo_valor) && (penultimo_valor === undefined || (!numeros.includes(penultimo_valor) && !operacoes.includes(ultimo_valor)))) {
                     input.value = anciant_input
                 }
             
