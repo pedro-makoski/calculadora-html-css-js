@@ -146,14 +146,13 @@ input.addEventListener('input', () => {
         input.value = valor_input.slice(0, valor_input.length - 1)
     }
 
-    if(valor_input.length > 1) {
+    if(valor_input.length > 1 && valor_input !== anciant_input) {
         for(let i = 0; i < valor_input_array.length; i++) {
             if(valor_input_array[i] !== anciant_input[i]) {
                 ultimo_valor = valor_input_array[i]
                 penultimo_valor = valor_input_array[i-1]
                 antepenultimo_valor = valor_input_array[i-2]
                 idx_ultimo_valor = i
-                i = valor_input_array.length
 
 
                 if (todas_operacoes.includes(ultimo_valor) && todas_operacoes.includes(penultimo_valor) && (numeros.includes(antepenultimo_valor) || sinais.includes(ultimo_valor))) { 
@@ -177,16 +176,13 @@ input.addEventListener('input', () => {
                 if(!numeros.includes(penultimo_valor) && penultimo_valor !== ')' && ultimo_valor === ')') {
                     input.value = anciant_input
                 }
-            
-                anciant_input = input.value
-            
-                setTimeout(() => {
-                    input.selectionStart = input.selectionEnd = input.value.length
-                }, 0)
+
+                i = valor_input_array.length
             } 
         }
 
     }
+
     anciant_input = input.value
 }) 
 
