@@ -119,6 +119,11 @@ botoes.forEach((botao) => {
     })
 })
 
+function goto(pos) {
+    input.focus()
+    input.selectionStart = input.selectionEnd = pos 
+}
+
 input.addEventListener('input', () => {
     let valor_input = input.value
     valor_input_array = Array.from(valor_input)
@@ -159,18 +164,25 @@ input.addEventListener('input', () => {
                     valor_input_array[idx_ultimo_valor - 1] = ultimo_valor
                     valor_input_array.splice(idx_ultimo_valor, 1)
                     input.value = valor_input_array.join('')
+                    goto(i)
                 } else if(!operacoes.includes(ultimo_valor) && !numeros.includes(ultimo_valor) && !operacoes_reais.includes(ultimo_valor) && !['(', ')'].includes(ultimo_valor) && input.value !== '') {
                     input.value = anciant_input
+                    goto(i)
                 }else if (operacoes_nao_sinais.includes(ultimo_valor) && (penultimo_valor === '(' || sinais.includes(penultimo_valor))) {
                     input.value = anciant_input
+                    goto(i)
                 } else if ((valor_input.length > 1 && operacoes_nao_sinais.includes(ultimo_valor) && sinais.includes(ultimo_valor))) {
                     input.value = valor_input.slice(0, valor_input.length - 1)
+                    goto(i)
                 } else if (valor_input.length === 1 && (operacoes_nao_sinais.includes(ultimo_valor) || ultimo_valor === ')')) {
                     input.value = ''
+                    goto(i)
                 } else if (ultimo_valor === ')' && (temquantosvalor(valor_input_array, '(') < temquantosvalor(valor_input_array, ')'))) {
                     input.value = anciant_input
+                    goto(i)
                 } else if(operacoes_nao_sinais.includes(ultimo_valor) && (penultimo_valor === undefined || (!numeros.includes(penultimo_valor) && !operacoes.includes(ultimo_valor)))) {
                     input.value = anciant_input
+                    goto(i)
                 }
             
                 if(!numeros.includes(penultimo_valor) && penultimo_valor !== ')' && ultimo_valor === ')') {
