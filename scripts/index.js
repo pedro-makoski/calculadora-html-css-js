@@ -155,8 +155,10 @@ input.addEventListener('input', () => {
         for(let i = 0; i < valor_input_array.length; i++) {
             if(valor_input_array[i] !== anciant_input[i]) {
                 ultimo_valor = valor_input_array[i]
+                console.log(ultimo_valor)
                 penultimo_valor = valor_input_array[i-1]
                 antepenultimo_valor = valor_input_array[i-2]
+                proximo_valor = valor_input_array[i+1]
                 idx_ultimo_valor = i
 
 
@@ -165,7 +167,12 @@ input.addEventListener('input', () => {
                     valor_input_array.splice(idx_ultimo_valor, 1)
                     input.value = valor_input_array.join('')
                     goto(i)
-                } else if(!operacoes.includes(ultimo_valor) && !numeros.includes(ultimo_valor) && !operacoes_reais.includes(ultimo_valor) && !['(', ')'].includes(ultimo_valor) && input.value !== '') {
+                } else if(todas_operacoes.includes(ultimo_valor) && todas_operacoes.includes(proximo_valor)) {
+                    valor_input_array[idx_ultimo_valor + 1] = ultimo_valor
+                    valor_input_array.splice(idx_ultimo_valor, 1)
+                    input.value = valor_input_array.join('')
+                    goto(i)
+                }else if(!operacoes.includes(ultimo_valor) && !numeros.includes(ultimo_valor) && !operacoes_reais.includes(ultimo_valor) && !['(', ')'].includes(ultimo_valor) && input.value !== '') {
                     input.value = anciant_input
                     goto(i)
                 }else if (operacoes_nao_sinais.includes(ultimo_valor) && (penultimo_valor === '(' || sinais.includes(penultimo_valor))) {
@@ -190,6 +197,7 @@ input.addEventListener('input', () => {
                 }
 
                 i = valor_input_array.length
+                
             } 
         }
 
