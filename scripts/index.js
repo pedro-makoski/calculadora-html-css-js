@@ -167,7 +167,7 @@ input.addEventListener('input', () => {
                     valor_input_array.splice(idx_ultimo_valor, 1)
                     input.value = valor_input_array.join('')
                     goto(i)
-                } else if(todas_operacoes.includes(ultimo_valor) && todas_operacoes.includes(proximo_valor)) {
+                } else if(todas_operacoes.includes(ultimo_valor) && todas_operacoes.includes(proximo_valor) && (numeros.includes(antepenultimo_valor) || sinais.includes(ultimo_valor))) {
                     valor_input_array[idx_ultimo_valor + 1] = ultimo_valor
                     valor_input_array.splice(idx_ultimo_valor, 1)
                     input.value = valor_input_array.join('')
