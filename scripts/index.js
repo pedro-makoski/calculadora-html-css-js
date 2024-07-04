@@ -81,7 +81,7 @@ botoes.forEach((botao) => {
         let ultimo_valor = valor_input.slice(-1)
         let penultimo_valor = valor_input.slice(-2, -1)
 
-        console.log(penultimo_valor)
+        
 
         let valor_botao = botao.innerHTML
         if (valor_botao === 'C') {
@@ -131,43 +131,25 @@ input.addEventListener('input', () => {
     let ultimo_valor = valor_input.slice(-1)
     let penultimo_valor = valor_input.slice(-2, -1)
     let antepenultimo_valor = valor_input.slice(-3, -2)
-    let idx_ultimo_valor = 0
 
-    /*if (todas_operacoes.includes(ultimo_valor) && todas_operacoes.includes(penultimo_valor) && (numeros.includes(antepenultimo_valor) || sinais.includes(ultimo_valor))) { 
-        input.value = `${penultimo_valor}${ultimo_valor}`
-    } else if(!operacoes.includes(ultimo_valor) && !numeros.includes(ultimo_valor) && !operacoes_reais.includes(ultimo_valor) && !['(', ')'].includes(ultimo_valor) && input.value !== '') {
-        input.value = valor_input.slice(0, valor_input.length - 1)
-    }else if (operacoes_nao_sinais.includes(ultimo_valor) && (penultimo_valor === '(' || sinais.includes(penultimo_valor))) {
-        input.value = valor_input.slice(0, valor_input.length - 1)
-    } else if ((valor_input.length > 1 && operacoes_nao_sinais.includes(ultimo_valor) && sinais.includes(ultimo_valor))) {
-        input.value = valor_input.slice(0, valor_input.length - 2)
-    } else if (valor_input.length === 1 && (operacoes_nao_sinais.includes(ultimo_valor) || ultimo_valor === ')')) {
-        input.value = ''
-    } else if (ultimo_valor === ')' && (temquantosvalor(valor_input_array, '(') < temquantosvalor(valor_input_array, ')'))) {
-        input.value = valor_input.slice(0, valor_input.length - 1)
-    } 
-
-    if(!numeros.includes(penultimo_valor) && penultimo_valor !== ')' && ultimo_valor === ')') {
-        input.value = valor_input.slice(0, valor_input.length - 1)
-    }*/
-
-    if(valor_input.length > 1) {
+    if(valor_input.length > 0) {
         for(let i = 0; i < valor_input_array.length; i++) {
-        
             ultimo_valor = valor_input_array[i]
             penultimo_valor = valor_input_array[i-1]
             antepenultimo_valor = valor_input_array[i-2]
             proximo_valor = valor_input_array[i+1]
 
+            console.log(ultimo_valor)
 
             if (todas_operacoes.includes(ultimo_valor) && todas_operacoes.includes(penultimo_valor) && (numeros.includes(antepenultimo_valor) || sinais.includes(ultimo_valor))) { 
                 valor_input_array[i - 1] = ultimo_valor
                 valor_input_array.splice(i, 1)
                 input.value = valor_input_array.join('')
-                i -= 1
                 goto(i+1)
+                i -= 1
             } else if(!operacoes.includes(ultimo_valor) && !numeros.includes(ultimo_valor) && !operacoes_reais.includes(ultimo_valor) && !['(', ')'].includes(ultimo_valor) && input.value !== '') {
-                input.value = anciant_input
+                valor_input_array.splice(i, 1)
+                input.value = valor_input_array.join('')
                 goto(i)
             }else if(todas_operacoes.includes(ultimo_valor) && todas_operacoes.includes(proximo_valor) && (numeros.includes(antepenultimo_valor) || sinais.includes(ultimo_valor))) {
                 valor_input_array[i] = ultimo_valor
@@ -190,6 +172,11 @@ input.addEventListener('input', () => {
             } else if(operacoes_nao_sinais.includes(ultimo_valor) && (penultimo_valor === undefined || (!numeros.includes(penultimo_valor) && !operacoes.includes(ultimo_valor)))) {
                 input.value = anciant_input
                 goto(i)
+            } else if(ultimo_valor === '') {
+                valor_input_array[i - 1] = ultimo_valor
+                valor_input_array.splice(i, 1)
+                input.value = valor_input_array.join('')
+                goto(i+1)
             }
         
             if(!numeros.includes(penultimo_valor) && penultimo_valor !== ')' && ultimo_valor === ')') {
