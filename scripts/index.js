@@ -139,8 +139,6 @@ input.addEventListener('input', () => {
             antepenultimo_valor = valor_input_array[i-2]
             proximo_valor = valor_input_array[i+1]
 
-            console.log(ultimo_valor)
-
             if (todas_operacoes.includes(ultimo_valor) && todas_operacoes.includes(penultimo_valor) && (numeros.includes(antepenultimo_valor) || sinais.includes(ultimo_valor))) { 
                 valor_input_array[i - 1] = ultimo_valor
                 valor_input_array.splice(i, 1)

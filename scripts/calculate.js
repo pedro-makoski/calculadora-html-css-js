@@ -23,7 +23,6 @@ function separate(str) {
                 if(sinais.includes(valor)) {
                     valor_junto = (parseFloat(`${valor}1`) * parseFloat(`${valor_anterior}1`)) > 0 ? '+' : '-'
                     idx = numbers.lastIndexOf(valor_anterior)
-                    console.log(valor_junto)
                 } else if(operator.includes(valor)) {
                     throw new Error("Não se pode colocar operador depois de operador")
                 } else {
@@ -34,9 +33,6 @@ function separate(str) {
 
                 numbers[idx] = valor_junto
                 valor_anterior = valor_junto
-
-                console.log(numbers)
-
             }else if (valor === '.') {
                 let valor_junto = `${valor_anterior}.`
                 let idx = numbers.lastIndexOf(valor_anterior)
